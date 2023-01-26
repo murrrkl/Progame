@@ -8,7 +8,7 @@ bot = telebot.TeleBot(config.token)
 def dialog(message):
     m = message.text
     m = m.lower()
-    # from random import randint
+    
     if m == "привет":
         hello = ["hello", "Привет", "Здравствуй"]
         bot.send_message(message.chat.id, choice(hello))
