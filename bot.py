@@ -4,16 +4,6 @@ from random import choice
 
 bot = telebot.TeleBot(config.token)
 
-@bot.message_handler(commands=["start"])
-def message_start(message):
-    bot.send_message(message.chat.id, "Привет! Я Кико-бот")
-
-# \n - переход на новую строку
-
-@bot.message_handler(commands=["help"])
-def message_start(message):
-    bot.send_message(message.chat.id, "У меня есть команда start - чтобы начать общение  \n")
-
 @bot.message_handler(content_types=["text"])
 def dialog(message):
     m = message.text
