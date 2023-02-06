@@ -1,8 +1,8 @@
 import telebot
-import config
 from random import choice
 
-bot = telebot.TeleBot(config.token)
+token = ""
+bot = telebot.TeleBot(token)
 
 @bot.message_handler(content_types=["text"])
 def dialog(message):
