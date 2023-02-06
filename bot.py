@@ -16,6 +16,8 @@ def dialog(message):
         bot.send_message(message.chat.id, "kek")
     elif m == "шутка":
         bot.send_message(message.chat.id, "аххахаха")
+    else:
+         bot.send_message(message.chat.id, "команда не распозана!")
 
 if __name__ == "__main__":
     bot.infinity_polling()
