@@ -1,0 +1,15 @@
+from random import randint
+
+# авто номер "А123BC"
+avto_nomer = ""
+
+n = randint(65, 90) # Генерирую номер 1-ой буквы
+random_char = chr(n) # Получаю символ по номеру n
+
+avto_nomer = avto_nomer + random_char
+
+# Генерация 3х цирф
+
+# Генерация 2х букв
+
+print(avto_nomer)
