@@ -1,0 +1,50 @@
+# pip install pyTelegramBotAPI
+import telebot
+
+token = "7NFIk"
+bot = telebot.TeleBot(token)
+
+
+cities = ["Уссурийск", "Владивосток", "Артём"] # Список возможных городов
+uses = [] # Список уже используемых (названных) в игре городов
+pred = "*" # Созранение предыдущего слова в игре
+flag = False # Индикатор - False - бот не нашёл ответ, True - нашёл
+
+@bot.message_handler(content_types=["text"])
+def play(message):
+  global cities
+  global uses
+  global pred
+  global flag
+
+  user_city = message.text # Город пользователя
+  
+  first_letter_user = user_city[0] # Первая буква в городе пользователя
+  first_letter_user = first_letter_user.lower() # Делаем первую букву маленькой  A -> a
+  last_letter_user = user_city[-1] # Последняя буква города пользвователя
+
+  # Если города пользователя нет в списке уже использованных И (игра только началась ИЛИ последняя буква предыдущего города совпадает с первой буквой города пользователя)
+  if user_city not in uses and (pred == "*" or pred[-1] == first_letter_user): 
+    uses.append(user_city) # Если это так, запоминаем названный пользователем город
+    for city in cities: # Пробегаемся по всем возможным городам
+      first_letter_comp = city[0] # Первая буква в городе бота
+      first_letter_comp = first_letter_comp.lower() # Делаем первую букву маленькой  A -> a
+      # Если первая буква города бота совпадает с последней буквой города пользователя И такой город ещё не называли
+      if first_letter_comp == last_letter_user and first_letter_comp not in uses:
+        pred = city # Запоминаем выбранный город как последний названный в игре
+        bot.send_message(message.chat.id, city)   # Отправляем сообщение с названием города
+        flag = True # Переводим индикатор в положение True
+        cities.remove(city) # Удаляем город из списка возможных для программы
+        uses.append(city) # запоминаем названный программой город
+
+    if flag == False: # Проверяем - нашёл ли бот ответ
+      bot.send_message(message.chat.id, "Ты выиграл:c") 
+      
+  else:
+    bot.send_message(message.chat.id, "Так не по правилам!!!")
+    
+    
+if __name__ == "__main__":
+    bot.infinity_polling()
+
+  
